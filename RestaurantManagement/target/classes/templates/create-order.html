@@ -3,6 +3,20 @@
 <head>
     <title>Новый заказ</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <style>
+        .btn-adjust {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            font-size: 12px;
+            line-height: 1.5;
+            border-radius: 3px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 2px;
+        }
+    </style>
 </head>
 <body>
 <div class="main-content">
@@ -115,15 +129,18 @@
 
             let addBtn = document.createElement("button");
             addBtn.textContent = "+";
+            addBtn.classList.add("btn-adjust");
             addBtn.onclick = function () {
                 changeDishCount(dishId, 1);
             };
 
             let removeBtn = document.createElement("button");
             removeBtn.textContent = "-";
+            removeBtn.classList.add("btn-adjust");
             removeBtn.onclick = function () {
                 changeDishCount(dishId, -1);
             };
+
 
             dishDiv.appendChild(addBtn);
             dishDiv.appendChild(removeBtn);

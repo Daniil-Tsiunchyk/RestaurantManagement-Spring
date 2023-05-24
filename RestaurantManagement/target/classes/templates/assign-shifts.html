@@ -17,7 +17,7 @@
 
 <div class="main-content">
     <div id="content">
-        <h2>Назначение смен</h2>
+        <h2>Назначение смены</h2>
         <form action="#" th:action="@{/assign-shift}" method="post">
             <label for="staff_id">Выберите сотрудника:</label>
             <select id="staff_id" name="staff_id">
@@ -25,6 +25,7 @@
             </select>
             <label for="date">Выберите дату:</label>
             <input type="date" id="date" name="date"/>
+            <br>
             <button type="submit">Назначить</button>
         </form>
     </div>

@@ -31,7 +31,7 @@ public class AuthorisationController {
             if (staff.getPassword().equals(password) && staff.getDismissalFromWork() == null) {
                 switch (staff.getRole()) {
                     case "ОФИЦИАНТ" -> {
-                        return "redirect:/waiterJob";
+                        return "redirect:/create-order";
                     }
                     case "АДМИНИСТРАТОР" -> {
                         return "redirect:/staff";

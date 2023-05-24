@@ -27,7 +27,7 @@
         <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.information}"></td>
-            <td th:text="${order.totalCost}"></td>
+            <td th:text="${order.totalCost + ' р.'}"></td>
             <td th:text="${order.table.id}"></td>
             <td th:text="${order.startTime}"></td>
             <td th:text="${order.endTime}"></td>
@@ -35,44 +35,5 @@
         </tr>
     </table>
 </div>
-
-<div class="sidebar-right">
-    <h2>Добавить новый заказ</h2>
-<!--    <form th:action="@{/orders/add}" th:object="${newOrder}" method="post">-->
-<!--        <div>-->
-<!--            <label for="information">Информация:</label>-->
-<!--            <input type="text" id="information" th:field="*{information}" required>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label for="totalCost">Общая стоимость:</label>-->
-<!--            <input type="text" id="totalCost" th:field="*{totalCost}" required>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label for="table">Стол:</label>-->
-<!--            <input type="text" id="table" th:field="*{table}" required>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label for="startTime">Время начала:</label>-->
-<!--            <input type="text" id="startTime" th:field="*{startTime}" required>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label for="endTime">Время окончания:</label>-->
-<!--            <input type="text" id="endTime" th:field="*{endTime}" required>-->
-<!--        </div>-->
-
-<!--        <div>-->
-<!--            <label for="status">Статус:</label>-->
-<!--            <input type="text" id="status" th:field="*{status}" required>-->
-<!--        </div>-->
-
-<!--        <button type="submit">Добавить</button>-->
-<!--    </form>-->
-</div>
-
-
 </body>
 </html>
