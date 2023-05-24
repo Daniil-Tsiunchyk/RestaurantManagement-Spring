@@ -52,6 +52,7 @@
                     <button type="button" onclick="addDish()" id="addDishButton">Добавить блюдо</button>
                 </p>
                 </p>
+                <input type="hidden" name="table_id" id="table_id">
             </form>
         </div>
 
@@ -68,11 +69,13 @@
             <div id="selectedDishes"></div>
             <div class="total-cost">
                 <p id="totalCost">Совокупная стоимость: 0</p>
-                <button onclick="submitOrder()">Создать заказ</button>
+                <button type="submit" form="orderForm">Создать заказ</button>
                 <p>
                     <button type="reset" onclick="resetOrder()">Сбросить заказ</button>
                 </p>
             </div>
+            <div id="selectedDishes"></div>
+
         </div>
     </div>
 </div>
@@ -112,7 +115,6 @@
             dishTextDiv = dishDiv.querySelector(".dish-text");
             dishTextDiv.textContent = dishName + " - " + dishCost + " (x" + selectedDishCounts[dishId] + ")";
         } else {
-            selectedDishes.push(dishId);
             dishDiv = document.createElement("div");
             dishDiv.setAttribute("id", "dish" + dishId);
 
@@ -192,6 +194,9 @@
         document.getElementById('table_id').value = "1";
         filterDishesByType();
     };
+    document.getElementById('tableSelect').addEventListener('change', function () {
+        document.getElementById('table_id').value = this.value;
+    });
 </script>
 </body>
 </html>

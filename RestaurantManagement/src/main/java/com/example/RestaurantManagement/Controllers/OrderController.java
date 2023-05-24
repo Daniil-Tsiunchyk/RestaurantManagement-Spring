@@ -9,10 +9,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -49,15 +51,25 @@ public class OrderController {
     public String submitOrder(@RequestParam Integer table_id,
                               @RequestParam List<Integer> dish_ids,
                               RedirectAttributes redirectAttributes) {
+
+        if (dish_ids == null || dish_ids.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Выберите хотя бы одно блюдо перед созданием заказа");
+            return "redirect:/create-order";
+        }
+
         Order order = new Order();
         order.setTotalCost(calculateTotalCost(dish_ids));
-        orderRepository.save(order);
+        order.setTable(tablesRepository.findById(table_id).orElseThrow());
+        order.setStartTime(new Timestamp(System.currentTimeMillis()));
+        order.setStatus("Принят");
+        order = orderRepository.save(order);
         for (Integer dish_id : dish_ids) {
             Optional<Dish> dishOptional = dishRepository.findById(dish_id);
             if (dishOptional.isPresent()) {
                 OrderedDish orderedDish = new OrderedDish();
                 orderedDish.setDish(dishOptional.get());
                 orderedDish.setOrder(order);
+                orderedDish.setStatus("Принят");
                 orderedDishRepository.save(orderedDish);
             }
         }
@@ -65,6 +77,7 @@ public class OrderController {
         redirectAttributes.addFlashAttribute("message", "Заказ успешно создан!");
         return "redirect:/view-orders";
     }
+
 
     private double calculateTotalCost(List<Integer> dish_ids) {
         double totalCost = 0;
@@ -97,6 +110,22 @@ public class OrderController {
 
         model.addAttribute("orders", orders);
         return "view-orders";
+    }
+
+    @PostMapping("/update-status/{id}")
+    public String updateStatus(@PathVariable int id, @RequestParam String status) {
+        Optional<Order> optionalOrder = orderRepository.findById(id);
+
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+
+            order.setStatus(status);
+            order.getOrderedDishes().forEach(dish -> dish.setStatus(status));
+
+            orderRepository.save(order);
+        }
+
+        return "redirect:/view-orders";
     }
 
 

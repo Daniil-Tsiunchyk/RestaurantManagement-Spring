@@ -144,7 +144,6 @@
                 <li><a href="/login">Выход</a></li>
             </ul>
         </div>
-        <!--        <div class="order-container"> Если закомментировать, будет также интересный дизайн-->
         <div class="order-container">
             <div th:each="order : ${orders}">
                 <div class="order-container">
@@ -161,6 +160,14 @@
                             <div class="order-info-item">
                                 <strong>Статус заказа:</strong>
                                 <span th:text="${order.status}"></span>
+                                <form th:action="@{'/update-status/' + ${order.id}}" method="post">
+                                    <select name="status">
+                                        <option value="Принят">Принят</option>
+                                        <option value="Подан">Подан</option>
+                                        <option value="Закрыт">Закрыт</option>
+                                    </select>
+                                    <button type="submit">Изменить статус</button>
+                                </form>
                             </div>
                             <div class="order-info-item">
                                 <strong>Дата и время начала:</strong>
@@ -172,6 +179,7 @@
                             </div>
                         </div>
                         <div>
+                            <h3>Заказанные блюда</h3>
                             <table>
                                 <thead>
                                 <tr>
@@ -191,11 +199,10 @@
                         </div>
                     </div>
                 </div>
-                <!--</div> Если закомментировать, будет также интересный дизайн-->
             </div>
         </div>
-        <!-- ваш код -->
     </div>
+</div>
 
 </body>
 
