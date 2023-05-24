@@ -5,6 +5,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
 <body>
+
 <div id="content">
     <table>
         <thead>
@@ -16,18 +17,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="orderedDish : ${orderedDishes}">
+        <tr th:each="orderedDish : ${orderedDishes}" th:if="${orderedDish.status} == 'Принят'">
             <td th:text="${orderedDish.order.id}"></td>
             <td>
-                <a th:href="@{'/recipe/' + ${orderedDish.dish.recipe.id}}" th:text="${orderedDish.dish.name}"></a>
+                <a th:href="@{'/recipe/' + ${orderedDish.dish.recipe.idrecipes}}"
+                   th:text="${orderedDish.dish.name}"></a>
             </td>
             <td th:text="${orderedDish.status}"></td>
             <td>
                 <form th:action="@{'/update-dish-status/' + ${orderedDish.id}}" method="post">
                     <select name="status">
-                        <option value="Готовится">Готовится</option>
                         <option value="Готово">Готово</option>
-                        <option value="Сервировано">Сервировано</option>
                     </select>
                     <button type="submit">Обновить</button>
                 </form>
@@ -36,5 +36,10 @@
         </tbody>
     </table>
 </div>
+
+<footer>
+    <button onclick="location.href='/login'">Выйти</button>
+</footer>
+
 </body>
 </html>

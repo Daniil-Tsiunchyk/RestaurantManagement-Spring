@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface OrderedDishRepository extends JpaRepository<OrderedDish, Integer> {
-    List<OrderedDish> findByOrder(Order order);
+    List<OrderedDish> findAllByOrder(Order order);
+
 }
 

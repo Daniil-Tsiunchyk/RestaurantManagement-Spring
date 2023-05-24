@@ -60,4 +60,9 @@ public class AuthorisationController {
         model.addAttribute("errorMessage", "Неверный логин или пароль");
         return "login";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession request) {
+        return "redirect:/login";
+    }
 }
