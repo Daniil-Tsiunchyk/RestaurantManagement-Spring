@@ -2,6 +2,7 @@ package com.example.RestaurantManagement.Controllers;
 
 import com.example.RestaurantManagement.Models.Staff;
 import com.example.RestaurantManagement.Repositories.StaffRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +18,24 @@ public class AuthorisationController {
     @Autowired
     StaffRepository staffRepository;
 
+    @GetMapping("/")
+    public String defaultPageRedirect() {
+        return "redirect:/login";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
     @PostMapping("/login")
-    public String postLogin(@RequestParam String login, @RequestParam String password, Model model) {
+    public String postLogin(@RequestParam String login, @RequestParam String password, Model model, HttpSession session) {
         Optional<Staff> optionalStaff = staffRepository.findStaffByLogin(login);
 
         if (optionalStaff.isPresent()) {
             Staff staff = optionalStaff.get();
             if (staff.getPassword().equals(password) && staff.getDismissalFromWork() == null) {
+                session.setAttribute("staff", staff);
                 switch (staff.getRole()) {
                     case "ОФИЦИАНТ" -> {
                         return "redirect:/create-order";
