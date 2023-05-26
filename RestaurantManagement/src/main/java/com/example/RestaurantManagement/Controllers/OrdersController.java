@@ -5,6 +5,8 @@ import com.example.RestaurantManagement.Services.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,5 +24,11 @@ public class OrdersController {
         List<Order> orders = orderService.getAllOrders();
         model.addAttribute("orders", orders);
         return "orders";
+    }
+
+    @PostMapping("/orders/delete")
+    public String deleteOrder(@RequestParam("id") int id) {
+        orderService.deleteOrder(id);
+        return "redirect:/orders";
     }
 }

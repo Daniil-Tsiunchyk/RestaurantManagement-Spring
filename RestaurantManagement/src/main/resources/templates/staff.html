@@ -23,6 +23,7 @@
             <th>Роль</th>
             <th>Дата начала работы</th>
             <th>Дата увольнения с работы</th>
+            <th>Действия</th>
         </tr>
         <tr th:each="staff : ${staff}">
             <td th:text="${staff.id}"></td>
@@ -32,6 +33,22 @@
             <td th:text="${staff.role}"></td>
             <td th:text="${staff.apparatusEmployed}"></td>
             <td th:text="${staff.dismissalFromWork}"></td>
+            <td>
+                <form th:action="@{/staff/update}" method="post">
+                    <input type="hidden" th:value="${staff.id}" name="id"/>
+                    <select name="role">
+                        <option value="АДМИНИСТРАТОР">Администратор</option>
+                        <option value="МЕНЕДЖЕР">Менеджер</option>
+                        <option value="ПОВАР">Повар</option>
+                        <option value="ОФИЦИАНТ">Официант</option>
+                    </select>
+                    <button type="submit">Сменить роль</button>
+                </form>
+                <form th:action="@{/staff/delete}" method="post">
+                    <input type="hidden" th:value="${staff.id}" name="id"/>
+                    <button type="submit">Уволить</button>
+                </form>
+            </td>
         </tr>
     </table>
 </div>
@@ -49,16 +66,23 @@
         <input type="password" id="password" th:field="*{password}" required>
 
         <label for="role">Роль:</label>
-        <input type="text" id="role" th:field="*{role}" required>
+        <select id="role" th:field="*{role}" required>
+            <option value="АДМИНИСТРАТОР">Администратор</option>
+            <option value="МЕНЕДЖЕР">Менеджер</option>
+            <option value="ПОВАР">Повар</option>
+            <option value="ОФИЦИАНТ">Официант</option>
+        </select>
 
+
+        <br>
         <button type="submit">Добавить</button>
-        <div class="actions">
-            <a href="/staff/update">Сменить роль</a>
-            <a href="/staff/delete">Уволить сотрудника</a>
-            <a href="/staff/delete">Удалить аккаунт</a>
-        </div>
+
     </form>
 </div>
+<br>
+<br>
+<br>
+<br>
 
 </body>
 </html>

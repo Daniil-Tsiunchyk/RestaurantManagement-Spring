@@ -23,6 +23,7 @@
             <th>Время подачи заказа</th>
             <th>Время выполнения заказа</th>
             <th>Статус заказа</th>
+            <th>Действия</th>
         </tr>
         <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
@@ -32,8 +33,19 @@
             <td th:text="${order.startTime}"></td>
             <td th:text="${order.endTime}"></td>
             <td th:text="${order.status}"></td>
+            <td>
+                <form th:action="@{/orders/delete}" method="post">
+                    <input type="hidden" th:value="${order.id}" name="id"/>
+                    <button type="submit">Удалить заказ</button>
+                </form>
+            </td>
         </tr>
     </table>
+</div>
+<div class="sidebar-right">
+    <div class="actions">
+        <a href="/staff/delete">Удалить заказ</a>
+    </div>
 </div>
 </body>
 </html>

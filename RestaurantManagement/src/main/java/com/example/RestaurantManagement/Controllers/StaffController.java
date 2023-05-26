@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 
@@ -29,20 +30,26 @@ public class StaffController {
 
     @PostMapping("/staff/add")
     public String addStaff(@ModelAttribute Staff staff) {
-        staff.setApparatusEmployed((java.sql.Date) new Date());
+        java.util.Date currentDate = new java.util.Date();
+        staff.setApparatusEmployed(new java.sql.Date(currentDate.getTime()));
         staffService.saveStaff(staff);
         return "redirect:/staff";
     }
 
+
     @PostMapping("/staff/update")
-    public String updateStaff(@ModelAttribute Staff staff) {
+    public String updateStaff(@RequestParam("id") int id, @RequestParam("role") String role) {
+        Staff staff = staffService.getStaffById(id);
+        staff.setRole(role);
         staffService.updateStaff(staff);
         return "redirect:/staff";
     }
 
     @PostMapping("/staff/delete")
-    public String deleteStaff(@ModelAttribute Staff staff) {
+    public String deleteStaff(@RequestParam("id") int id) {
+        Staff staff = staffService.getStaffById(id);
         staffService.deleteStaff(staff);
         return "redirect:/staff";
     }
+
 }

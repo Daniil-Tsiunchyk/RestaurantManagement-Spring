@@ -28,7 +28,37 @@
             <td>Есть</td>
             <td th:text="${dish.cost + ' р.'}"></td>
             <td th:text="${dish.type.name}"></td>
+            <td>
+                <form th:action="@{/menu/edit}" method="post">
+                    <input type="hidden" th:value="${dish.id}" name="id"/>
+                    <label for="name">Название:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="cost">Стоимость:</label>
+                    <input type="number" id="cost" name="cost" required>
+                    <label for="type">Тип:</label>
+                    <select id="type" name="type">
+                        <option th:each="dishType : ${dishTypes}" th:value="${dishType.name}" th:text="${dishType.name}"></option>
+                    </select>
+                    <button type="submit">Редактировать</button>
+                </form>
+                <form th:action="@{/menu/delete}" method="post">
+                    <input type="hidden" th:value="${dish.id}" name="id"/>
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
         </tr>
+        <div class="sidebar-right">
+            <h2>Добавить новое блюдо</h2>
+            <form th:action="@{/menu/add}" method="post">
+                <label for="name">Название:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="cost">Стоимость:</label>
+                <input type="number" id="cost" name="cost" required>
+                <label for="type">Тип:</label>
+                <input type="text" id="type" name="type" required>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
     </table>
 </div>
 

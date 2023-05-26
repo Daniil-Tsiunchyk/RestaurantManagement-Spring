@@ -9,10 +9,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AdminCheckInterceptor()).addPathPatterns("", "");
-        registry.addInterceptor(new ManagerCheckInterceptor()).addPathPatterns("", "");
-        registry.addInterceptor(new KitchenCheckInterceptor()).addPathPatterns("", "");
-        registry.addInterceptor(new WaiterCheckInterceptor()).addPathPatterns("", "");
+        registry.addInterceptor(new AdminCheckInterceptor()).addPathPatterns("/menu", "/orders", "/staff");
+        registry.addInterceptor(new ManagerCheckInterceptor()).addPathPatterns("/assign-shifts", "/book-table", "/manage-orders", "/view-schedule");
+        registry.addInterceptor(new KitchenCheckInterceptor()).addPathPatterns("/kitchen", "/recipe");
+        registry.addInterceptor(new WaiterCheckInterceptor()).addPathPatterns("/create-order", "/view-orders");
     }
 
 }

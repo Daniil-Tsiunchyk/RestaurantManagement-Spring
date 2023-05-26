@@ -11,5 +11,8 @@ import java.util.List;
 public interface OrderedDishRepository extends JpaRepository<OrderedDish, Integer> {
     List<OrderedDish> findAllByOrder(Order order);
 
+    List<OrderedDish> findAllByDish_Id(int id);
+
+    List<OrderedDish> findAllByDishId(int id);
 }
 
