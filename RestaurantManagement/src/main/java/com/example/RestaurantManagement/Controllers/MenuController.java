@@ -2,6 +2,7 @@ package com.example.RestaurantManagement.Controllers;
 
 import com.example.RestaurantManagement.Models.Dish;
 import com.example.RestaurantManagement.Models.DishType;
+import com.example.RestaurantManagement.Repositories.DishTypeRepository;
 import com.example.RestaurantManagement.Services.DishService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
