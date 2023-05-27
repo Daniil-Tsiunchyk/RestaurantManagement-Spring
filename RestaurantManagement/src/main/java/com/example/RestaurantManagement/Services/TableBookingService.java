@@ -18,7 +18,8 @@ public class TableBookingService {
     private final TablesRepository tablesRepository;
 
     @Autowired
-    public TableBookingService(TableBookingRepository tableBookingRepository, TablesRepository tablesRepository) {
+    public TableBookingService(TableBookingRepository tableBookingRepository,
+                               TablesRepository tablesRepository) {
         this.tableBookingRepository = tableBookingRepository;
         this.tablesRepository = tablesRepository;
     }
@@ -27,23 +28,23 @@ public class TableBookingService {
         return tablesRepository.findAll();
     }
 
-    public String bookTable(int tableId, Date date, Time time, String info) {
-        Tables table = tablesRepository.findById(tableId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid table Id:" + tableId));
+    public List<TableBooking> getAllBookings() {
+        return tableBookingRepository.findAll();
+    }
 
-        List<TableBooking> existingBookings = tableBookingRepository.findByTableAndDateAndTime(table, date, time);
-        if (!existingBookings.isEmpty()) {
-            return "Столик уже забронирован на выбранное время и дату.";
+    public String bookTable(int tableId, Date date, Time time, String info) {
+        Tables table = tablesRepository.findById(tableId).orElse(null);
+        if (table == null) {
+            return "Столик не найден";
         }
 
-        TableBooking newBooking = new TableBooking();
-        newBooking.setTable(table);
-        newBooking.setDate(date);
-        newBooking.setTime(time);
-        newBooking.setInfo(info);
+        TableBooking booking = new TableBooking();
+        booking.setTable(table);
+        booking.setDate(date);
+        booking.setTime(time);
+        booking.setInfo(info);
+        tableBookingRepository.save(booking);
 
-        tableBookingRepository.save(newBooking);
-
-        return "Столик успешно забронирован!";
+        return "Столик успешно забронирован";
     }
 }

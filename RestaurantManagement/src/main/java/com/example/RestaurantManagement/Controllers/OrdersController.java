@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,9 +23,13 @@ public class OrdersController {
     @GetMapping("/orders")
     public String showOrders(Model model) {
         List<Order> orders = orderService.getAllOrders();
+        if (orders == null) {
+            orders = new ArrayList<>();
+        }
         model.addAttribute("orders", orders);
         return "orders";
     }
+
 
     @PostMapping("/orders/delete")
     public String deleteOrder(@RequestParam("id") int id) {

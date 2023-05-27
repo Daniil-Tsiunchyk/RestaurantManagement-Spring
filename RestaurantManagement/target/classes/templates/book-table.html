@@ -25,17 +25,39 @@
                 <option th:each="table : ${tables}" th:value="${table.id}" th:text="${'Столик №' + table.id}"></option>
             </select>
             <label for="date">Выберите дату:</label>
-            <input type="date" id="date" name="date" min="2023-05-19" max="2023-05-22"/>
+            <input type="date" id="date" name="date" th:min="${currentDate}" th:max="${maxDate}"/>
             <label for="time">Выберите время:</label>
             <select id="time" name="time">
                 <option th:each="time : ${times}" th:value="${time}" th:text="${time}"></option>
             </select>
+
             <label for="info">Введите ваше имя:</label>
             <input type="text" id="info" name="info" placeholder="Имя">
             <br>
             <button type="submit">Добавить</button>
         </form>
         <p th:text="${message}"></p>
+    </div>
+    <div class="booking-table">
+        <h2>Забронированные столики</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Столик</th>
+                <th>Дата</th>
+                <th>Время</th>
+                <th>Информация</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking : ${bookings}">
+                <td th:text="${'Столик №' + booking.table.id}"></td>
+                <td th:text="${booking.date}"></td>
+                <td th:text="${booking.time}"></td>
+                <td th:text="${booking.info}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

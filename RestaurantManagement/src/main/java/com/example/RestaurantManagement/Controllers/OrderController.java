@@ -5,13 +5,11 @@ import com.example.RestaurantManagement.Models.Order;
 import com.example.RestaurantManagement.Models.OrderRequest;
 import com.example.RestaurantManagement.Models.OrderedDish;
 import com.example.RestaurantManagement.Repositories.*;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -49,12 +47,11 @@ public class OrderController {
 
 
     @PostMapping("/create-order")
-    @Transactional
-    public Order createOrder(@RequestBody OrderRequest orderRequest) {
+    public String createOrder(@RequestBody OrderRequest orderRequest) {
+        System.out.println(orderRequest);
         Order newOrder = new Order();
 
-        newOrder.setInformation(orderRequest.getInformation());
-        newOrder.setTotalCost(orderRequest.getTotalCost());
+        newOrder.setInformation("Заказ корректно обработан");
         newOrder.setTable(orderRequest.getTable());
         newOrder.setStartTime(new Timestamp(System.currentTimeMillis()));
         newOrder.setStatus("Принят");
@@ -63,19 +60,22 @@ public class OrderController {
 
         List<OrderedDish> orderedDishes = new ArrayList<>();
 
-        for (Dish dish : orderRequest.getDishes()) {
-            OrderedDish orderedDish = new OrderedDish();
-            orderedDish.setDish(dish);
-            orderedDish.setOrder(newOrder);
-            orderedDish.setStatus("Принят");
-            orderedDishRepository.save(orderedDish);
-            orderedDishes.add(orderedDish);
+        if(orderRequest.getDish_ids() != null) {
+            for (Integer dishId : orderRequest.getDish_ids()) {
+                Dish dish = dishRepository.findById(dishId)
+                        .orElseThrow(() -> new RuntimeException("Dish not found: " + dishId));
+
+                OrderedDish orderedDish = new OrderedDish();
+                orderedDish.setDish(dish);
+                orderedDish.setOrder(newOrder);
+                orderedDish.setStatus("Принят");
+                orderedDishRepository.save(orderedDish);
+                orderedDishes.add(orderedDish);
+            }
         }
-
-        newOrder.setOrderedDishes(orderedDishes);
-
-        return newOrder;
+        return "redirect:/view-orders";
     }
+
 
 
     @GetMapping("/view-orders")

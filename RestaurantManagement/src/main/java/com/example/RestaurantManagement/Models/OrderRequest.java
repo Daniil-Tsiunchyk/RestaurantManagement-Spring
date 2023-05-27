@@ -1,5 +1,7 @@
 package com.example.RestaurantManagement.Models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class OrderRequest {
@@ -7,7 +9,17 @@ public class OrderRequest {
     private String information;
     private double totalCost;
     private Tables table;
-    private List<Dish> dishes;
+    @JsonProperty("dish_ids")
+
+    private List<Integer> dish_ids;
+
+    public List<Integer> getDish_ids() {
+        return dish_ids;
+    }
+
+    public void setDish_ids(List<Integer> dish_ids) {
+        this.dish_ids = dish_ids;
+    }
 
     public String getInformation() {
         return information;
@@ -33,11 +45,4 @@ public class OrderRequest {
         this.table = table;
     }
 
-    public List<Dish> getDishes() {
-        return dishes;
-    }
-
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
-    }
 }

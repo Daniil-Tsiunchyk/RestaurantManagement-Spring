@@ -72,8 +72,8 @@
                 <p>
                     <button type="reset" onclick="resetOrder()">Сбросить заказ</button>
                 </p>
+                <button type="submit" form="orderForm">Создать заказ</button>
             </div>
-            <div id="selectedDishes"></div>
         </div>
     </div>
 </div>
@@ -186,6 +186,7 @@
         }
     }
 
+
     window.onload = function () {
         document.getElementById('typeSelect').value = "";
         document.getElementById('dishSelect').value = "";
@@ -206,8 +207,9 @@
         let orderData = {
             dish_ids: dishIds,
             table_id: tableId
-        };
 
+        };
+        console.log(orderData)
         fetch('/create-order', {
             method: 'POST',
             headers: {
@@ -216,6 +218,7 @@
             body: JSON.stringify(orderData)
         }).then(function (response) {
             if (response.ok) {
+                console.log(JSON.stringify(orderData));
                 return response.json();
             } else {
                 throw new Error('Ошибка сервера, код: ' + response.status);
@@ -223,9 +226,11 @@
         }).then(function (data) {
             console.log('Заказ успешно создан:', data);
             resetOrder();
+            window.location.href = "/view-orders";
         }).catch(function (error) {
             console.error('Ошибка:', error);
         });
+
     });
 </script>
 </body>
