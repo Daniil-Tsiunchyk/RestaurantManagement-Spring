@@ -155,10 +155,14 @@
                                 <strong>Номер заказа:</strong>
                                 <span th:text="${order.id}"></span>
                             </div>
-                            <!--                            <div class="order-info-item">-->
-                            <!--                                <strong>Общая стоимость:</strong>-->
-                            <!--                                <span th:text="${order.totalCost + ' р.'}"></span>-->
-                            <!--                            </div>-->
+                            <div class="order-info-item">
+                                <strong>Информация о заказе:</strong>
+                                <span th:utext="${order.information}"></span>
+                            </div>
+                            <div class="order-info-item">
+                                <strong>Общая стоимость:</strong>
+                                <span th:text="${order.totalCost + ' р.'}"></span>
+                            </div>
                             <div class="order-info-item">
                                 <strong>Статус заказа:</strong>
                                 <span th:text="${order.status}"></span>

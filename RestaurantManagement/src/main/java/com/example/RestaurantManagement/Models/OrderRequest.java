@@ -3,6 +3,7 @@ package com.example.RestaurantManagement.Models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
 
 public class OrderRequest {
 
@@ -12,6 +13,24 @@ public class OrderRequest {
     @JsonProperty("dish_ids")
 
     private List<Integer> dish_ids;
+    private Map<Integer, Integer> dish_counts;
+    private Integer table_id;
+
+    public Map<Integer, Integer> getDish_counts() {
+        return dish_counts;
+    }
+
+    public void setDish_counts(Map<Integer, Integer> dish_counts) {
+        this.dish_counts = dish_counts;
+    }
+
+    public Integer getTable_id() {
+        return table_id;
+    }
+
+    public void setTable_id(Integer table_id) {
+        this.table_id = table_id;
+    }
 
     public List<Integer> getDish_ids() {
         return dish_ids;

@@ -51,8 +51,6 @@
                 <p>
                     <button type="button" onclick="addDish()" id="addDishButton">Добавить блюдо</button>
                 </p>
-                <input type="hidden" name="table_id" id="table_id">
-                <button type="submit">Создать заказ</button>
             </form>
         </div>
 
@@ -72,6 +70,7 @@
                 <p>
                     <button type="reset" onclick="resetOrder()">Сбросить заказ</button>
                 </p>
+                <input type="hidden" name="table_id" id="table_id">
                 <button type="submit" form="orderForm">Создать заказ</button>
             </div>
         </div>
@@ -206,9 +205,10 @@
 
         let orderData = {
             dish_ids: dishIds,
+            dish_counts: selectedDishCounts,
             table_id: tableId
-
         };
+
         console.log(orderData)
         fetch('/create-order', {
             method: 'POST',

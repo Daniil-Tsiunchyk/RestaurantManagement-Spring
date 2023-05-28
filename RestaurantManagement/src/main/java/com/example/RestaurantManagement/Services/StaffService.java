@@ -21,12 +21,12 @@ public class StaffService {
         return staffRepository.findAll();
     }
 
-    public Staff saveStaff(Staff staff) {
-        return staffRepository.save(staff);
+    public void saveStaff(Staff staff) {
+        staffRepository.save(staff);
     }
 
-    public Staff updateStaff(Staff staff) {
-        return staffRepository.save(staff);
+    public void updateStaff(Staff staff) {
+        staffRepository.save(staff);
     }
 
     public void deleteStaff(Staff staff) {

@@ -26,7 +26,7 @@ public class KitchenController {
 
     @GetMapping("/kitchen")
     public String getKitchen(Model model) {
-        List<OrderedDish> orderedDishes = (List<OrderedDish>) orderedDishRepository.findAll();
+        List<OrderedDish> orderedDishes = orderedDishRepository.findAll();
         List<OrderedDish> acceptedDishes = orderedDishes.stream()
                 .filter(dish -> dish.getStatus().equals("Принят"))
                 .collect(Collectors.toList());
@@ -55,11 +55,5 @@ public class KitchenController {
             }
         }
         return "redirect:/kitchen";
-    }
-
-    @GetMapping("/recipe/{id}")
-    public String viewRecipe(@PathVariable("id") int id, Model model) {
-
-        return null;
     }
 }

@@ -1,11 +1,9 @@
 package com.example.RestaurantManagement.Controllers;
 
-import com.example.RestaurantManagement.Models.Dish;
-import com.example.RestaurantManagement.Models.Order;
-import com.example.RestaurantManagement.Models.OrderRequest;
-import com.example.RestaurantManagement.Models.OrderedDish;
+import com.example.RestaurantManagement.Models.*;
 import com.example.RestaurantManagement.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -45,38 +41,63 @@ public class OrderController {
         return "create-order";
     }
 
-
     @PostMapping("/create-order")
     public String createOrder(@RequestBody OrderRequest orderRequest) {
         System.out.println(orderRequest);
         Order newOrder = new Order();
+        Tables table = tablesRepository.findById(orderRequest.getTable_id())
+                .orElseThrow(() -> new RuntimeException("Стол не найден: " + orderRequest.getTable_id()));
 
-        newOrder.setInformation("Заказ корректно обработан");
-        newOrder.setTable(orderRequest.getTable());
+        newOrder.setTable(table);
         newOrder.setStartTime(new Timestamp(System.currentTimeMillis()));
         newOrder.setStatus("Принят");
+        newOrder.setInformation("Информация о блюдах формируется...");
 
         newOrder = orderRepository.save(newOrder);
 
-        List<OrderedDish> orderedDishes = new ArrayList<>();
+        Map<String, Pair<Integer, Double>> dishInfo = new HashMap<>();
+        double totalCost = 0.0;
 
-        if(orderRequest.getDish_ids() != null) {
+        if (orderRequest.getDish_ids() != null) {
             for (Integer dishId : orderRequest.getDish_ids()) {
                 Dish dish = dishRepository.findById(dishId)
-                        .orElseThrow(() -> new RuntimeException("Dish not found: " + dishId));
+                        .orElseThrow(() -> new RuntimeException("Блюдо не найдено: " + dishId));
 
-                OrderedDish orderedDish = new OrderedDish();
-                orderedDish.setDish(dish);
-                orderedDish.setOrder(newOrder);
-                orderedDish.setStatus("Принят");
-                orderedDishRepository.save(orderedDish);
-                orderedDishes.add(orderedDish);
+                int count = orderRequest.getDish_counts().getOrDefault(dishId, 0);
+
+                for (int i = 0; i < count; i++) {
+                    OrderedDish orderedDish = new OrderedDish();
+                    orderedDish.setDish(dish);
+                    orderedDish.setOrder(newOrder);
+                    orderedDish.setStatus("Принят");
+                    orderedDishRepository.save(orderedDish);
+
+                    totalCost += dish.getCost();
+                }
+
+                String dishName = dish.getName();
+                int quantity = count;
+                dishInfo.put(dishName, Pair.of(quantity, dish.getCost()));
             }
         }
+
+        StringBuilder information = new StringBuilder("=========== Заказ ===========\n");
+        for (Map.Entry<String, Pair<Integer, Double>> entry : dishInfo.entrySet()) {
+            information.append(entry.getKey())
+                    .append(":\n- количество: ")
+                    .append(entry.getValue().getFirst())
+                    .append("\n- цена за единицу: ")
+                    .append(entry.getValue().getSecond())
+                    .append("\n-----------------------------\n");
+        }
+        information = new StringBuilder(information.toString().replace("\n", "<br>"));
+
+        newOrder.setInformation(information.toString());
+        newOrder.setTotalCost(totalCost);
+        orderRepository.save(newOrder);
+
         return "redirect:/view-orders";
     }
-
-
 
     @GetMapping("/view-orders")
     public String viewOrders(@RequestParam(required = false) String status,

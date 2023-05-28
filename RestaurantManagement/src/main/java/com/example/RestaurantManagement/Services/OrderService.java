@@ -1,8 +1,11 @@
 package com.example.RestaurantManagement.Services;
 
 import com.example.RestaurantManagement.Models.Order;
+import com.example.RestaurantManagement.Models.OrderedDish;
 import com.example.RestaurantManagement.Models.Tables;
 import com.example.RestaurantManagement.Repositories.OrderRepository;
+import com.example.RestaurantManagement.Repositories.OrderedDishRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +15,11 @@ import java.util.Optional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderedDishRepository orderedDishRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, OrderedDishRepository orderedDishRepository) {
         this.orderRepository = orderRepository;
+        this.orderedDishRepository = orderedDishRepository;
     }
 
     public List<Order> getAllOrders() {
@@ -30,15 +35,11 @@ public class OrderService {
         return orders;
     }
 
-    public Optional<Order> getOrderById(int id) {
-        return orderRepository.findById(id);
-    }
-
-    public Order saveOrder(Order order) {
-        return orderRepository.save(order);
-    }
-
+    @Transactional
     public void deleteOrder(int id) {
-        orderRepository.deleteById(id);
+        Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Order not found"));
+        List<OrderedDish> orderedDishes = orderedDishRepository.findByOrder(order);
+        orderedDishRepository.deleteInBatch(orderedDishes);
+        orderRepository.delete(order);
     }
 }

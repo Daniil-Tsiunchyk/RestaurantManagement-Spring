@@ -13,6 +13,6 @@ public interface OrderedDishRepository extends JpaRepository<OrderedDish, Intege
 
     List<OrderedDish> findAllByDish_Id(int id);
 
-    List<OrderedDish> findAllByDishId(int id);
+    List<OrderedDish> findByOrder(Order order);
 }
 

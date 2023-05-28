@@ -11,6 +11,5 @@ import java.util.List;
 
 @Repository
 public interface TableBookingRepository extends JpaRepository<TableBooking, Integer> {
-    List<TableBooking> findByTableAndDateAndTime(Tables table, Date date, Time time);
 
 }
