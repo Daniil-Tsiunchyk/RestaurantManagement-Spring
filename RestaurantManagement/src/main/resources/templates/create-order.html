@@ -44,8 +44,8 @@
                     <select id="dishSelect" name="dish_id" required>
                         <option value="" disabled>Select a dish</option>
                         <option th:each="dish : ${dishes}" th:value="${dish.id}"
-                                th:text="${dish.name} + ' - ' + ${dish.cost}"
-                                th:data-type-id="${dish.type.id}" th:data-cost="${dish.cost}"/>
+                                th:text="${dish.name} + ' - ' + ${dish.cost}+'руб.'"
+                                th:data-type-id="${dish.type.id}" th:data-cost="${dish.cost}+'руб.'"/>
                     </select>
                 </p>
                 <p>
@@ -59,14 +59,14 @@
             <p>
                 Столик:
                 <select name="table_id" required id="tableSelect">
-                    <option value="" disabled>Select a table</option>
+                    <option value="" selected>Выберите столик</option>
                     <option th:each="table : ${tables}" th:value="${table.id}" th:text="${table.id}"/>
                 </select>
             </p>
             <h2>Выбранные блюда:</h2>
             <div id="selectedDishes"></div>
             <div class="total-cost">
-                <p id="totalCost">Совокупная стоимость: 0</p>
+                <p id="totalCost">Совокупная стоимость: 0руб.</p>
                 <p>
                     <button type="reset" onclick="resetOrder()">Сбросить заказ</button>
                 </p>
@@ -147,7 +147,7 @@
             selectedDishesDiv.appendChild(dishDiv);
         }
         totalCost += dishCost;
-        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost;
+        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost + "руб.";
     }
 
     document.getElementById('dishSelect').addEventListener('change', function () {
@@ -170,7 +170,7 @@
                 selectedDishes.splice(index, 1);
             }
         }
-        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost;
+        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost + "руб.";
     }
 
     function resetOrder() {
@@ -178,7 +178,8 @@
         selectedDishCosts = {};
         selectedDishCounts = {};
         totalCost = 0;
-        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost;
+        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost + "руб.";
+        ;
         let selectedDishesDiv = document.getElementById("selectedDishes");
         while (selectedDishesDiv.firstChild) {
             selectedDishesDiv.removeChild(selectedDishesDiv.firstChild);
@@ -189,7 +190,7 @@
     window.onload = function () {
         document.getElementById('typeSelect').value = "";
         document.getElementById('dishSelect').value = "";
-        document.getElementById('table_id').value = "1";
+        document.getElementById('table_id').value = "";
         filterDishesByType();
     };
 
@@ -201,6 +202,11 @@
         event.preventDefault();
 
         let dishIds = Array.from(document.querySelectorAll('input[name="dish_ids"]')).map(input => input.value);
+        if (dishIds.length === 0) {
+            alert("Пожалуйста, выберите хотя бы одно блюдо перед созданием заказа.");
+            return;
+        }
+
         let tableId = document.getElementById('table_id').value;
 
         let orderData = {
@@ -219,18 +225,20 @@
         }).then(function (response) {
             if (response.ok) {
                 console.log(JSON.stringify(orderData));
+                resetOrder();
+                document.getElementById('orderForm').reset();
+                document.getElementById('typeSelect').value = "";
+                document.getElementById('table_id').value = "";
+                filterDishesByType();
                 return response.json();
             } else {
                 throw new Error('Ошибка сервера, код: ' + response.status);
             }
         }).then(function (data) {
             console.log('Заказ успешно создан:', data);
-            resetOrder();
-            window.location.href = "/view-orders";
         }).catch(function (error) {
             console.error('Ошибка:', error);
         });
-
     });
 </script>
 </body>

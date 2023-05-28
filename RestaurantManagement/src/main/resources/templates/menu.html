@@ -50,7 +50,7 @@
             <td th:text="${dish.id}"></td>
             <td th:text="${dish.name}"></td>
             <td>Есть</td>
-            <td th:text="${dish.cost + ' р.'}"></td>
+            <td th:text="${dish.cost + 'руб.'}"></td>
             <td th:text="${dish.type.name}"></td>
             <td>
                 <form th:action="@{/menu/edit}" method="post">

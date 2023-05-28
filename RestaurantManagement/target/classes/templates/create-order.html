@@ -59,7 +59,7 @@
             <p>
                 Столик:
                 <select name="table_id" required id="tableSelect">
-                    <option value="" disabled>Select a table</option>
+                    <option value="" selected>Выберите столик</option>
                     <option th:each="table : ${tables}" th:value="${table.id}" th:text="${table.id}"/>
                 </select>
             </p>
@@ -189,7 +189,7 @@
     window.onload = function () {
         document.getElementById('typeSelect').value = "";
         document.getElementById('dishSelect').value = "";
-        document.getElementById('table_id').value = "1";
+        document.getElementById('table_id').value = "";
         filterDishesByType();
     };
 
@@ -201,6 +201,11 @@
         event.preventDefault();
 
         let dishIds = Array.from(document.querySelectorAll('input[name="dish_ids"]')).map(input => input.value);
+        if (dishIds.length === 0) {
+            alert("Пожалуйста, выберите хотя бы одно блюдо перед созданием заказа.");
+            return;
+        }
+
         let tableId = document.getElementById('table_id').value;
 
         let orderData = {
@@ -219,18 +224,20 @@
         }).then(function (response) {
             if (response.ok) {
                 console.log(JSON.stringify(orderData));
+                resetOrder();
+                document.getElementById('orderForm').reset();
+                document.getElementById('typeSelect').value = "";
+                document.getElementById('table_id').value = "";
+                filterDishesByType();
                 return response.json();
             } else {
                 throw new Error('Ошибка сервера, код: ' + response.status);
             }
         }).then(function (data) {
             console.log('Заказ успешно создан:', data);
-            resetOrder();
-            window.location.href = "/view-orders";
         }).catch(function (error) {
             console.error('Ошибка:', error);
         });
-
     });
 </script>
 </body>

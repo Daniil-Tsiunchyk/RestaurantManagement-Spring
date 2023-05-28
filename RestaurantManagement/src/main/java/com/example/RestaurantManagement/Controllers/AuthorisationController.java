@@ -63,7 +63,7 @@ public class AuthorisationController {
 
     @GetMapping("/logout")
     public String logout(HttpSession request) {
-//        request.setAttribute();
+        request.setAttribute("staff", null);
         return "redirect:/login";
     }
 }

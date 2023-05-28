@@ -151,7 +151,11 @@
                         <div>
                             <div class="order-info-item">
                                 <strong>Номер заказа:</strong>
-                                <span th:text="${order.id}"></span>
+                                <span th:text="${'№'+order.id}"></span>
+                            </div>
+                            <div class="order-info-item">
+                                <strong>Столик:</strong>
+                                <span th:text="${'№'+order.table.id}"></span>
                             </div>
                             <div class="order-info-item">
                                 <strong>Информация о заказе:</strong>
@@ -182,6 +186,7 @@
                                 <strong>Дата и время окончания:</strong>
                                 <span th:text="${order.endTime}"></span>
                             </div>
+
                         </div>
                         <div>
                             <h3>Заказанные блюда</h3>
