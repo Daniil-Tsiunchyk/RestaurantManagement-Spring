@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.sql.Date;
 import java.util.Map;
@@ -47,4 +48,11 @@ public class ShiftController {
         model.addAttribute("shiftStats", shiftStats);
         return "view-schedule";
     }
+
+    @PostMapping("/view-schedule/{id}/delete")
+    public String deleteWorkHour(@PathVariable("id") int id) {
+        workHourRepository.deleteById(id);
+        return "redirect:/view-schedule";
+    }
+
 }

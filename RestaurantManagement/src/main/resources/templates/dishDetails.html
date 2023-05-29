@@ -55,7 +55,22 @@
     <h2 th:text="${dish.name}"></h2>
     <p th:text="${dish.description}"></p>
     <p th:text="${dish.recipe}"></p>
-    <a class="back-button" href="/kitchen">Назад</a>
+    <a class="back-button" href="/menu">Назад</a>
+</div>
+<h2>Редактировать детали</h2>
+<div class="center-div">
+    <form th:action="@{/menu/{id}/edit(id=${dish.id})}" method="post" enctype="multipart/form-data">
+        <label for="name">Название:</label>
+        <input type="text" id="name" name="name" th:value="${dish.name}" required>
+
+        <label for="description">Описание:</label>
+        <input type="text" id="description" name="description" th:value="${dish.description}" required>
+
+        <label for="recipe">Рецепт:</label>
+        <textarea id="recipe" name="recipe" required th:text="${dish.recipe}"></textarea>
+
+        <button type="submit">Редактировать</button>
+    </form>
 </div>
 </body>
 </html>

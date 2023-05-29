@@ -64,5 +64,18 @@ public class DishService {
         }
     }
 
+    public Dish getDishById(int id) {
+        return dishRepository.findById(id).orElse(null);
+    }
 
+    public void editDishDetails(int id, String name, String description, String recipe){//}, byte[] image) {
+        Dish dish = getDishById(id);
+        if (dish != null) {
+            dish.setName(name);
+            dish.setDescription(description);
+            dish.setRecipe(recipe);
+           // dish.setImage(image);
+            dishRepository.save(dish);
+        }
+    }
 }

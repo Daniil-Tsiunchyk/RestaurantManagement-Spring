@@ -44,12 +44,13 @@
             <th>Стоимость</th>
             <th>Тип блюда</th>
             <th>Редактировать/удалить</th>
-
         </tr>
         <tr th:each="dish : ${dishes}">
             <td th:text="${dish.id}"></td>
             <td th:text="${dish.name}"></td>
-            <td>Есть</td>
+            <td>
+                <a th:href="@{/menu/{id}/details(id=${dish.id})}" th:text="'Посмотреть рецепт'"></a>
+            </td>
             <td th:text="${dish.cost + 'руб.'}"></td>
             <td th:text="${dish.type.name}"></td>
             <td>

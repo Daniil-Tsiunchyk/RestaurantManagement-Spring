@@ -26,7 +26,16 @@
             <tr th:each="workHour : ${workHours}">
                 <td th:text="${workHour.staff.name}"></td>
                 <td th:text="${workHour.date}"></td>
+                <td>
+                    <div class="delete-button-wrapper">
+                        <form th:action="@{/view-schedule/{id}/delete(id=${workHour.id})}" method="post">
+                            <button type="submit" class="delete-button">X</button>
+                        </form>
+                    </div>
+                </td>
+
             </tr>
+
         </table>
         <h2>Статистика смен</h2>
         <table>

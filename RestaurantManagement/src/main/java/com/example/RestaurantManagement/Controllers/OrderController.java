@@ -81,7 +81,7 @@ public class OrderController {
             }
         }
 
-        StringBuilder information = new StringBuilder("=========== Заказ ===========\n");
+        StringBuilder information = new StringBuilder("\n=========== Заказ ===========\n");
         for (Map.Entry<String, Pair<Integer, Double>> entry : dishInfo.entrySet()) {
             information.append(entry.getKey())
                     .append(":\n- количество: ")

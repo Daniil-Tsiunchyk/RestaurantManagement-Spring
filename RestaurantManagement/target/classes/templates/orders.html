@@ -28,7 +28,7 @@
         <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
             <td th:utext="${order.information}"></td>
-            <td th:text="${order.totalCost + ' р.'}"></td>
+            <td th:text="${order.totalCost + 'руб.'}"></td>
             <td th:text="${order.table.id}"></td>
             <td th:text="${order.startTime}"></td>
             <td th:text="${order.endTime}"></td>

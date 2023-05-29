@@ -10,10 +10,6 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "recipe_id")
-    private Recipe recipe;
-
     @Column(name = "name")
     private String name;
 
@@ -24,6 +20,36 @@ public class Dish {
     @JoinColumn(name = "type_id")
     private DishType type;
 
+    @Column(name = "description", nullable = true)
+    private String description;
+
+    @Column(name = "recipe", nullable = true)
+    private String recipe;
+
+    @Lob
+    @Column(name = "image", nullable = true)
+    private byte[] image;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRecipe(String recipe) {
+        this.recipe = recipe;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public int getId() {
         return id;
     }
@@ -32,12 +58,8 @@ public class Dish {
         this.id = id;
     }
 
-    public Recipe getRecipe() {
+    public String getRecipe() {
         return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
     }
 
     public String getName() {

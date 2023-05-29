@@ -1,15 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Рецепт блюда</title>
+    <title>Детали блюда</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+
+    <style>
+        .center-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 50%;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .back-button {
+            text-decoration: none;
+            display: inline-block;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
-<div id="content">
+<h1>Детали блюда</h1>
+<div class="center-div">
     <h2 th:text="${dish.name}"></h2>
-    <img th:src="${dish.recipe.photo}" alt="Фото блюда"/>
-    <p><strong>Информация: </strong><span th:text="${dish.recipe.information}"></span></p>
-    <p><strong>Инструкция: </strong><span th:text="${dish.recipe.instruction}"></span></p>
+    <p th:text="${dish.description}"></p>
+    <p th:text="${dish.recipe}"></p>
+    <a class="back-button" href="/kitchen">Назад</a>
 </div>
 </body>
 </html>

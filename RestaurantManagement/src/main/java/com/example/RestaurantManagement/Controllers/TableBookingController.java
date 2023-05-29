@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,6 +31,9 @@ public class TableBookingController {
 
     @GetMapping("/book-table")
     public String bookingForm(Model model) {
+        List<TableBooking> bookings = tableBookingService.getAllBookings();
+        model.addAttribute("bookings", bookings);
+
         List<Tables> allTables = tableBookingService.getAllTables();
         model.addAttribute("tables", allTables);
 
@@ -88,4 +92,11 @@ public class TableBookingController {
 
         return "book-table";
     }
+
+    @PostMapping("/book-table/{id}/delete")
+    public String deleteBooking(@PathVariable("id") int id, Model model) {
+        tableBookingService.deleteBooking(id);
+        return "redirect:/book-table";
+    }
+
 }

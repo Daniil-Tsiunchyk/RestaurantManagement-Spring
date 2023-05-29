@@ -44,8 +44,8 @@
                     <select id="dishSelect" name="dish_id" required>
                         <option value="" disabled>Select a dish</option>
                         <option th:each="dish : ${dishes}" th:value="${dish.id}"
-                                th:text="${dish.name} + ' - ' + ${dish.cost}"
-                                th:data-type-id="${dish.type.id}" th:data-cost="${dish.cost}"/>
+                                th:text="${dish.name} + ' - ' + ${dish.cost}+'руб.'"
+                                th:data-type-id="${dish.type.id}" th:data-cost="${dish.cost}+'руб.'"/>
                     </select>
                 </p>
                 <p>
@@ -66,7 +66,7 @@
             <h2>Выбранные блюда:</h2>
             <div id="selectedDishes"></div>
             <div class="total-cost">
-                <p id="totalCost">Совокупная стоимость: 0</p>
+                <p id="totalCost">Совокупная стоимость: 0руб.</p>
                 <p>
                     <button type="reset" onclick="resetOrder()">Сбросить заказ</button>
                 </p>
@@ -147,7 +147,7 @@
             selectedDishesDiv.appendChild(dishDiv);
         }
         totalCost += dishCost;
-        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost;
+        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost + "руб.";
     }
 
     document.getElementById('dishSelect').addEventListener('change', function () {
@@ -170,7 +170,7 @@
                 selectedDishes.splice(index, 1);
             }
         }
-        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost;
+        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost + "руб.";
     }
 
     function resetOrder() {
@@ -178,7 +178,8 @@
         selectedDishCosts = {};
         selectedDishCounts = {};
         totalCost = 0;
-        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost;
+        document.getElementById("totalCost").textContent = "Совокупная стоимость: " + totalCost + "руб.";
+        ;
         let selectedDishesDiv = document.getElementById("selectedDishes");
         while (selectedDishesDiv.firstChild) {
             selectedDishesDiv.removeChild(selectedDishesDiv.firstChild);

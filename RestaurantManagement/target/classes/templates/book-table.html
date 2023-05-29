@@ -3,6 +3,13 @@
 <head>
     <title>Бронирование столиков</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <style>
+        .delete-button {
+            width: 30px;
+            height: 30px;
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
 <div class="sidebar">
@@ -47,6 +54,7 @@
                 <th>Дата</th>
                 <th>Время</th>
                 <th>Информация</th>
+                <th>Удалить бронь</th>
             </tr>
             </thead>
             <tbody>
@@ -55,7 +63,15 @@
                 <td th:text="${booking.date}"></td>
                 <td th:text="${booking.time}"></td>
                 <td th:text="${booking.info}"></td>
+                <td>
+                    <div class="delete-button-wrapper">
+                        <form th:action="@{/book-table/{id}/delete(id=${booking.id})}" method="post">
+                            <button type="submit" class="delete-button">X</button>
+                        </form>
+                    </div>
+                </td>
             </tr>
+
             </tbody>
         </table>
     </div>

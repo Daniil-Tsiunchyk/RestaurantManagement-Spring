@@ -20,7 +20,7 @@
         <tr th:each="orderedDish : ${orderedDishes}" th:if="${orderedDish.status} == 'Принят'">
             <td th:text="${orderedDish.order.id}"></td>
             <td>
-                <a th:href="@{'/recipe/' + ${orderedDish.dish.recipe.idrecipes}}"
+                <a th:href="@{/kitchen/{id}/recipe(id=${orderedDish.dish.id})}"
                    th:text="${orderedDish.dish.name}"></a>
             </td>
             <td th:text="${orderedDish.status}"></td>

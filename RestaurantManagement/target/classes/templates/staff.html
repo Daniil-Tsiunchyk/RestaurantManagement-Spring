@@ -14,6 +14,7 @@
 
 <div class="main-content">
     <h1>Управление персоналом</h1>
+    <p th:text="${error}"></p>
     <table>
         <tr>
             <th>Id</th>
@@ -22,7 +23,6 @@
             <th>Пароль</th>
             <th>Роль</th>
             <th>Дата начала работы</th>
-<!--            <th>Дата увольнения с работы</th>-->
             <th>Действия</th>
         </tr>
         <tr th:each="staff : ${staff}">
@@ -32,9 +32,8 @@
             <td th:text="${staff.password}"></td>
             <td th:text="${staff.role}"></td>
             <td th:text="${staff.apparatusEmployed}"></td>
-<!--            <td th:text="${staff.dismissalFromWork}"></td>-->
             <td>
-                <form th:action="@{/staff/update}" method="post">
+                <form th:action="@{/staff/update}" method="post" th:if="${staff.id != currentUser.id}">
                     <input type="hidden" th:value="${staff.id}" name="id"/>
                     <select name="role">
                         <option value="АДМИНИСТРАТОР">Администратор</option>
@@ -44,7 +43,7 @@
                     </select>
                     <button type="submit">Сменить роль</button>
                 </form>
-                <form th:action="@{/staff/delete}" method="post">
+                <form th:action="@{/staff/delete}" method="post" th:if="${staff.id != currentUser.id}">
                     <input type="hidden" th:value="${staff.id}" name="id"/>
                     <button type="submit">Уволить</button>
                 </form>
