@@ -69,7 +69,7 @@
 
 1. Клонировать репозиторий
 ```shell
-git clone https://github.com/Heimdall-Program/RestaurantManagement-Spring-Boot-Java.git
+git clone https://github.com/Daniil-Tsiunchyk/RestaurantManagement-Spring-Boot-Java.git
 ```
 
 2. Перейти в каталог проекта
