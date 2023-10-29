@@ -1,0 +1,42 @@
+.center-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid #333;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  width: 50%;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+.back-button {
+  text-decoration: none;
+  display: inline-block;
+  padding: 15px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.back-button:hover {
+  background-color: #555;
+}

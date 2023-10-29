@@ -1,0 +1,22 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+form label {
+  margin: 5px 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  width: 100%;
+  box-sizing: border-box;
+}

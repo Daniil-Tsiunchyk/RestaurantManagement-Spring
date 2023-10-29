@@ -1,115 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Авторизация</title>
-    <style>
-        html, body {
-            background-color: bisque;
-            height: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .footer {
-            position: sticky;
-            bottom: 0;
-            justify-content: space-between;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        form {
-            width: 300px;
-            margin: 0 auto;
-        }
-
-        form div {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"], input[type="password"], button {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        input[type="text"], input[type="password"] {
-            border: 1px solid #ccc;
-        }
-
-        button {
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #555;
-        }
-
-        .header, .footer {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            margin-top: 40px;
-        }
-    </style>
-
-</head>
-<body>
-
-<div class="header">
-    <div>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+  </head>
+  <body>
+    <div class="header">
+      <div>
         <h2>RestaurantManagement</h2>
-    </div>
-    <div>
+      </div>
+      <div>
         <p>Email: fcad.ke@gmail.com</p>
         <p>Телефон: +375 (44) 213-45-56</p>
+      </div>
     </div>
-</div>
 
-<h1>Добро пожаловать! Авторизуйтесь:</h1>
+    <h1>Добро пожаловать! Авторизуйтесь:</h1>
 
-<form th:action="@{/login}" method="post">
-    <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
-    <div>
+    <form th:action="@{/login}" method="post">
+      <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+      <div>
         <label for="login">Логин:</label>
-        <input type="text" id="login" name="login" required>
-    </div>
-    <div>
+        <input type="text" id="login" name="login" required />
+      </div>
+      <div>
         <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <button type="submit">Войти</button>
+    </form>
+
+    <div class="footer">
+      <p>© 2023 RestaurantCo</p>
     </div>
-    <button type="submit">Войти</button>
-</form>
-
-<div class="footer">
-    <p>© 2023 RestaurantCo</p>
-</div>
-
-</body>
+  </body>
 </html>

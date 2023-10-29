@@ -2,46 +2,47 @@ package com.example.RestaurantManagement.Services;
 
 import com.example.RestaurantManagement.Models.Staff;
 import com.example.RestaurantManagement.Repositories.StaffRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class StaffService {
-    private final StaffRepository staffRepository;
 
-    @Autowired
-    public StaffService(StaffRepository staffRepository) {
-        this.staffRepository = staffRepository;
-    }
+  private final StaffRepository staffRepository;
 
-    public List<Staff> getAllStaff() {
-        return staffRepository.findAll();
-    }
+  @Autowired
+  public StaffService(StaffRepository staffRepository) {
+    this.staffRepository = staffRepository;
+  }
 
-    public void saveStaff(Staff staff) {
-        staffRepository.save(staff);
-    }
+  public List<Staff> getAllStaff() {
+    return staffRepository.findAll();
+  }
 
-    public void updateStaff(Staff staff) {
-        staffRepository.save(staff);
-    }
+  public void saveStaff(Staff staff) {
+    staffRepository.save(staff);
+  }
 
-    public void deleteStaff(Staff staff) {
-        staffRepository.delete(staff);
-    }
+  public void updateStaff(Staff staff) {
+    staffRepository.save(staff);
+  }
 
-    public Staff getStaffById(int id) {
-        Optional<Staff> staff = staffRepository.findById(id);
-        if (staff.isPresent()) {
-            return staff.get();
-        } else {
-            throw new RuntimeException("Staff not found for id: " + id);
-        }
+  public void deleteStaff(Staff staff) {
+    staffRepository.delete(staff);
+  }
+
+  public Staff getStaffById(int id) {
+    Optional<Staff> staff = staffRepository.findById(id);
+    if (staff.isPresent()) {
+      return staff.get();
+    } else {
+      throw new RuntimeException("Staff not found for id: " + id);
     }
-    public boolean loginExists(String login) {
-        return staffRepository.findByLogin(login) != null;
-    }
+  }
+
+  public boolean loginExists(String login) {
+    return staffRepository.findByLogin(login) != null;
+  }
 }

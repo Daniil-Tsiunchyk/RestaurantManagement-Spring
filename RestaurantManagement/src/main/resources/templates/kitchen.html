@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Заказы кухни</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
-</head>
-<body>
-
-<div id="content">
-    <table>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <div id="content">
+      <table>
         <thead>
-        <tr>
+          <tr>
             <th>Заказ</th>
             <th>Блюдо</th>
             <th>Статус</th>
             <th>Изменить статус</th>
-        </tr>
+          </tr>
         </thead>
         <tbody>
-        <tr th:each="orderedDish : ${orderedDishes}" th:if="${orderedDish.status} == 'Принят'">
+          <tr
+            th:each="orderedDish : ${orderedDishes}"
+            th:if="${orderedDish.status} == 'Принят'"
+          >
             <td th:text="${orderedDish.order.id}"></td>
             <td>
-                <a th:href="@{/kitchen/{id}/recipe(id=${orderedDish.dish.id})}"
-                   th:text="${orderedDish.dish.name}"></a>
+              <a
+                th:href="@{/kitchen/{id}/recipe(id=${orderedDish.dish.id})}"
+                th:text="${orderedDish.dish.name}"
+              ></a>
             </td>
             <td th:text="${orderedDish.status}"></td>
             <td>
-                <form th:action="@{'/update-dish-status/' + ${orderedDish.id}}" method="post">
-                    <select name="status">
-                        <option value="Готово">Готово</option>
-                    </select>
-                    <button type="submit">Обновить</button>
-                </form>
+              <form
+                th:action="@{'/update-dish-status/' + ${orderedDish.id}}"
+                method="post"
+              >
+                <select name="status">
+                  <option value="Готово">Готово</option>
+                </select>
+                <button type="submit">Обновить</button>
+              </form>
             </td>
-        </tr>
+          </tr>
         </tbody>
-    </table>
-</div>
+      </table>
+    </div>
 
-<footer>
-    <button onclick="location.href='/login'">Выйти</button>
-</footer>
-
-</body>
+    <footer>
+      <button onclick="location.href='/login'">Выйти</button>
+    </footer>
+  </body>
 </html>

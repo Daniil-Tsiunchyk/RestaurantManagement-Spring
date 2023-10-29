@@ -8,15 +8,18 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class WaiterCheckInterceptor implements HandlerInterceptor {
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
-        HttpSession session = request.getSession();
-        Staff user = (Staff) session.getAttribute("staff");
-        if (user == null || !user.getRole().equals("ОФИЦИАНТ")) {
-            response.sendRedirect("/login");
-            return false;
-        }
-        return true;
+  @Override
+  public boolean preHandle(
+    HttpServletRequest request,
+    HttpServletResponse response,
+    Object handler
+  ) throws Exception {
+    HttpSession session = request.getSession();
+    Staff user = (Staff) session.getAttribute("staff");
+    if (user == null || !user.getRole().equals("ОФИЦИАНТ")) {
+      response.sendRedirect("/login");
+      return false;
     }
+    return true;
+  }
 }
